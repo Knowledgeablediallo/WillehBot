@@ -1,0 +1,12 @@
+# ==========================================
+# FILE: requirements.txt
+# ==========================================
+
+python-telegram-bot==20.7
+pandas
+numpy
+yfinance
+alpha_vantage
+finnhub-python
+twelvedata
+requests>=2.31.0
