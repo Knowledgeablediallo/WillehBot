@@ -1,0 +1,11 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+node_modules/
+*.log
+.idea/
+.sixth/
+README.mdgit
+signals_db.json
