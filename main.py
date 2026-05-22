@@ -20,7 +20,7 @@ from telegram.ext import (
     CallbackQueryHandler,
     ContextTypes
 )
-from telegram.error import NetworkError, TimedOut
+from telegram.error import Conflict, NetworkError, TimedOut
 from telegram.request import HTTPXRequest
 
 from data import get_market_data
@@ -47,6 +47,7 @@ TELEGRAM_READ_TIMEOUT = 30.0
 TELEGRAM_WRITE_TIMEOUT = 30.0
 TELEGRAM_POOL_TIMEOUT = 10.0
 TELEGRAM_RETRY_DELAY = 15
+TELEGRAM_CONFLICT_RETRY_DELAY = 60
 
 # ==========================================
 # ACTIVE SIGNALS
@@ -789,8 +790,15 @@ def main():
         print("🤖 Bot Running...")
 
         try:
-            app.run_polling()
+            app.run_polling(drop_pending_updates=True)
             break
+        except Conflict as error:
+            print(
+                "Telegram rejected polling because another bot instance is "
+                "already using this token. Retrying in "
+                f"{TELEGRAM_CONFLICT_RETRY_DELAY} seconds... ({error})"
+            )
+            time.sleep(TELEGRAM_CONFLICT_RETRY_DELAY)
         except (TimedOut, NetworkError) as error:
             print(
                 "Telegram connection timed out. "
