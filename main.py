@@ -789,12 +789,7 @@ def main():
         print("🤖 Bot Running...")
 
         try:
-            app.run_polling(
-                connect_timeout=TELEGRAM_CONNECT_TIMEOUT,
-                read_timeout=TELEGRAM_READ_TIMEOUT,
-                write_timeout=TELEGRAM_WRITE_TIMEOUT,
-                pool_timeout=TELEGRAM_POOL_TIMEOUT
-            )
+            app.run_polling()
             break
         except (TimedOut, NetworkError) as error:
             print(
