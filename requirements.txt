@@ -2,7 +2,7 @@
 # FILE: requirements.txt
 # ==========================================
 
-python-telegram-bot==20.7
+python-telegram-bot==22.6
 pandas
 numpy
 yfinance
